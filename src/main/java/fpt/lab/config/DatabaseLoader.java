@@ -3,7 +3,6 @@ package fpt.lab.config;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseLoader {
@@ -11,21 +10,20 @@ public class DatabaseLoader {
 	private static String DB_URL = null;
 	private static String USER_NAME = null;
 	private static String PASSWORD = null;
-	public static Connection connection = null;
 
 	public static Connection getConnection() {
-		if (connection == null) {
-			if (DB_URL == null) {
-				getResource();
-			}
-			try {
-				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-				connection = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+		if (DB_URL == null) {
+			getResource();
 		}
-		return connection;
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			Connection connection = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
+			return connection;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 	}
 
 	private static void getResource() {
@@ -42,9 +40,4 @@ public class DatabaseLoader {
 		}
 	}
 
-	public static void closeConnection() throws SQLException {
-		if (connection != null) {
-			connection.close();
-		}
-	}
 }
