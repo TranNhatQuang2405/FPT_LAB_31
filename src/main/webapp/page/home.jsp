@@ -1,52 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title><c:out value="${data.title}"/></title>
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/assets/css/home.css'></c:url>">
+	<meta charset="UTF-8">
+	<title><c:out value="${data.title}"/></title>
+	<link rel="stylesheet" type="text/css"
+		href="<c:url value='/assets/css/about.css'></c:url>">
 </head>
 <body>
 	<div class="container-fluid site-wrapper">
-		<!-- this is the Sheet -->
-		<div class="container-fluid header-wrapper " id="header">
-			<!-- this is the Header Wrapper -->
-			<div class="container">
-				<div class="title-wrapper">
-					<div class="title-wrapper-inner">
-						<a rel="nofollow" class="logo "
-							href="http://us-123-machinery.simplesite.com/"> </a>
-						<div class="title">${data.getValue("HOME_HEADER.TITLE")}</div>
-						<div class="subtitle">${data.getValue("HOME_HEADER.SUBTITLE")}</div>
-					</div>
-				</div>
-				<!-- these are the titles -->
-				<div class="navbar navbar-compact">
-					<div class="navbar-inner">
-						<div class="container">
-							<!-- Everything you want hidden at 940px or less, place within here -->
-							<div >
-								<ul class="nav"  data-submenu="horizontal">
-									<c:forEach var='item' items='${data.getArrayValue("NAVBAR")}'>
-										<li class="active" style="">
-											<a href='<c:url value="${item.get('PATH')}"/>'>
-												${item.get("CONTENT")}
-											</a>
-										</li>
-									</c:forEach>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- this is the Menu content -->
-			</div>
-		</div>
-		<!-- this is the Header content -->
+		
+		<c:import url="/common/header_navbar.jsp"/>
 
 		<div class="container-fluid content-wrapper" id="content">
 			<!-- this is the Content Wrapper -->
@@ -71,9 +38,9 @@
 										</p>
 										<div class="img-simple  ">
 											<div class="image">
-												<a rel="nofollow" data-ss="imagemodal"
-													data-href="http://cdn.simplesite.com/i/30/06/285978582474622512/i285978589337195322._szw1280h1280_.jpg"><img
-													src="./Home - us-123-machinery.simplesite.com_files/i285978589337195322._szw1280h1280_.jpg"></a>
+												<a rel="nofollow" data-ss="imagemodal">
+													<img src='<c:url value="${data.getValue('HOME_BODY.MAIN_IMAGE_URL')}"/>'>
+												</a>
 											</div>
 										</div>
 									</div>
