@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import fpt.lab.config.DatabaseLoader;
-import fpt.lab.model.PageContent;
+import fpt.lab.model.dto.PageContent;
 import fpt.lab.service.LoadFileService;
 
 public class PageDao {
@@ -25,7 +25,6 @@ public class PageDao {
 			connection.close();
 			return pageContent;
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			return null;
 		}
 	}
