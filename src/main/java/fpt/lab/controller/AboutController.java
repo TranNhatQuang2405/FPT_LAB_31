@@ -36,6 +36,7 @@ public class AboutController extends HttpServlet {
 		List<Integer> vistorCount = aboutService.getVisitorCount();
 		request.setAttribute("data", pageContent);
 		request.setAttribute("path", PathConstant.HOME_PATH);
+		request.setAttribute("fullpath", request.getRequestURL());
 		request.setAttribute("vistorCount", vistorCount);
 	}
 

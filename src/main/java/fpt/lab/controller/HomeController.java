@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fpt.lab.constant.PathConstant;
+import fpt.lab.model.dto.ItemHomeDto;
 import fpt.lab.model.dto.PageContent;
 import fpt.lab.model.req.AccessReq;
 import fpt.lab.service.CommonService;
@@ -23,6 +24,7 @@ public class HomeController extends HttpServlet {
 			throws ServletException, IOException {
 		doAccess(request);
 		doInit(request);
+		doGetData(request);
 		request.getRequestDispatcher(PathConstant.JSP_HOME_PATH).forward(request, response);
 	}
 
@@ -48,7 +50,13 @@ public class HomeController extends HttpServlet {
 		List<Integer> vistorCount = homeService.getVisitorCount();
 		request.setAttribute("data", pageContent);
 		request.setAttribute("path", PathConstant.HOME_PATH);
+		request.setAttribute("fullpath", request.getRequestURL());
 		request.setAttribute("vistorCount", vistorCount);
 	}
-
+	
+	private void doGetData(HttpServletRequest request) {
+		HomeService homeService = new HomeService();
+		List<List<ItemHomeDto>> itemHomeDtos = homeService.getListItemRemain();
+		request.setAttribute("sections", itemHomeDtos);
+	}
 }
