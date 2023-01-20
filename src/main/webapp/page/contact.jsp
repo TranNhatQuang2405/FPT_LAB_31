@@ -49,23 +49,29 @@
 									<div class="content">
 										<div class="alert alert-success hide">${data.getValue("CONTACT_BODY.THANKS_MESSAGE")}</div>
 										<p>${data.getValue("CONTACT_BODY.SEND_EMAIL_TITLE")}</p>
-										<form>
+										<form method="post">
 											<fieldset>
 												<div class="row-fluid">
 													<div class="span6">
-														<input type="text" placeholder='${data.getValue("CONTACT_BODY.NAME_PLACEHONDER")}' />
-														<span class="help-block"></span>
+														<input class="${error_name != null ? 'error': ''}" name="name" value="${name}" type="text" placeholder='${data.getValue("CONTACT_BODY.NAME_PLACEHONDER")}' />
+														<span class="help-block" style="${error_name != null ? 'display: inline-block': ''}">
+															${error_name}
+														</span>
 													</div>
 													<div class="span6">
-														<input type="text"
+														<input class="${error_email != null ? 'error': ''}" name="email" value="${email}" type="text"
 															placeholder='${data.getValue("CONTACT_BODY.EMAIL_PLACEHONDER")}' /> 
-													    <span class="help-block"></span>
+													    <span class="help-block" style="${error_email != null ? 'display: block': ''}">
+															${error_email}
+														</span>
 													</div>
 												</div>
 												<div class="row-fluid">
 													<div class="span12">
-														<textarea name="text" placeholder='${data.getValue("CONTACT_BODY.MESSAGE_PLACEHONDER")}'></textarea>
-													    <span class="help-block"></span>
+														<textarea class="${error_message != null ? 'error': ''}" name="message" placeholder='${data.getValue("CONTACT_BODY.MESSAGE_PLACEHONDER")}'>${message}</textarea>
+													    <span class="help-block" style="${error_message != null ? 'display: inline-block': ''}">
+															${error_message}
+														</span>
 													</div>
 												</div>
 												<div class="row-fluid">

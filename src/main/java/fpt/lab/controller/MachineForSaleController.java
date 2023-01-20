@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fpt.lab.constant.ParamConstant;
 import fpt.lab.constant.PathConstant;
 import fpt.lab.model.dto.ItemSaleDto;
 import fpt.lab.model.dto.PageContent;
@@ -34,15 +35,15 @@ public class MachineForSaleController extends HttpServlet {
 		MachineForSaleService machineForSaleService = new MachineForSaleService();
 		PageContent pageContent = machineForSaleService.getPageContent();
 		List<Integer> vistorCount = machineForSaleService.getVisitorCount();
-		request.setAttribute("data", pageContent);
-		request.setAttribute("path", PathConstant.MACHINE_FOR_SALE_PATH);
-		request.setAttribute("fullpath", request.getRequestURL());
-		request.setAttribute("vistorCount", vistorCount);
+		request.setAttribute(ParamConstant.PARAM_DATA, pageContent);
+		request.setAttribute(ParamConstant.PARAM_PATH, PathConstant.MACHINE_FOR_SALE_PATH);
+		request.setAttribute(ParamConstant.PARAM_FULL_PATH, request.getRequestURL());
+		request.setAttribute(ParamConstant.PARAM_VISTOR_COUNT, vistorCount);
 	}
 	
 	private void doGetData(HttpServletRequest request) {
 		MachineForSaleService machineForSaleService = new MachineForSaleService();
 		List<ItemSaleDto> itemSaleDtos = machineForSaleService.getListItemSale();
-		request.setAttribute("items", itemSaleDtos);
+		request.setAttribute(ParamConstant.MFS_PARAM_ITEMS, itemSaleDtos);
 	}
 }

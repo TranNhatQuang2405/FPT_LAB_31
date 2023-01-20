@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fpt.lab.constant.ParamConstant;
 import fpt.lab.constant.PathConstant;
 import fpt.lab.model.dto.ItemHomeDto;
 import fpt.lab.model.dto.PageContent;
@@ -59,15 +60,15 @@ public class HomeController extends HttpServlet {
 		HomeService homeService = new HomeService();
 		PageContent pageContent = homeService.getPageContent();
 		List<Integer> vistorCount = homeService.getVisitorCount();
-		request.setAttribute("data", pageContent);
-		request.setAttribute("path", PathConstant.HOME_PATH);
-		request.setAttribute("fullpath", request.getRequestURL());
-		request.setAttribute("vistorCount", vistorCount);
+		request.setAttribute(ParamConstant.PARAM_DATA, pageContent);
+		request.setAttribute(ParamConstant.PARAM_PATH, PathConstant.HOME_PATH);
+		request.setAttribute(ParamConstant.PARAM_FULL_PATH, request.getRequestURL());
+		request.setAttribute(ParamConstant.PARAM_VISTOR_COUNT, vistorCount);
 	}
 	
 	private void doGetData(HttpServletRequest request) {
 		HomeService homeService = new HomeService();
 		List<List<ItemHomeDto>> itemHomeDtos = homeService.getListItemRemain();
-		request.setAttribute("sections", itemHomeDtos);
+		request.setAttribute(ParamConstant.HOME_PARAM_SECTIONS, itemHomeDtos);
 	}
 }
