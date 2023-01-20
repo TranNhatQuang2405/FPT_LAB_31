@@ -33,7 +33,7 @@
 			</div>
 			<div class="wrapper viral-box">
 				<div class="heading">
-					<h4>${data.getValue("ADVERTISE.TITLE_SHARE")}</h4>
+					<h4>${data.getValue("ADVERTISE.TITLE_CREATE")}</h4>
 				</div>
 
 				<div class="content">

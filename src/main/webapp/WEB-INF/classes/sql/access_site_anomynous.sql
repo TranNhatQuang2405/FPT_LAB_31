@@ -17,5 +17,5 @@ VALUES(
 	1,
 	0,
 	GETDATE(),
-	?
+	'GUEST'
 )

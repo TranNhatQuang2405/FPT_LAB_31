@@ -1,11 +1,19 @@
 package fpt.lab.service;
 
+//import fpt.lab.constant.NumberResultConstant;
 import fpt.lab.dao.AccessDao;
 import fpt.lab.model.req.AccessReq;
 
 public class CommonService {
 	public int accessSite(AccessReq accessReq) {
 		AccessDao accessDao = new AccessDao();
-		return accessDao.accessSite(accessReq);
-	}
+//		if(accessDao.checkAccess(accessReq))
+			if(accessReq.getUserId() != null) {
+				return accessDao.accessSite(accessReq);
+			}else {
+				return accessDao.accessSiteAnomynous(accessReq);
+			}
+//		else 
+//			return NumberResultConstant.NO_ACTION;
+	}	
 }

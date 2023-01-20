@@ -10,6 +10,10 @@ public class AccessReq implements Serializable{
 
 	private String userAgent;
 	
+	private String sessionId;
+	
+	private String userId;
+	
 	public String getIp() {
 		return ip;
 	}
@@ -27,13 +31,31 @@ public class AccessReq implements Serializable{
 		this.userAgent = userAgent;
 	}
 
-	public AccessReq(String ip, String userAgent) {
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public AccessReq(String ip, String userAgent, String sessionId) {
 		super();
 		this.ip = ip;
 		this.userAgent = userAgent;
+		this.sessionId = sessionId;
+		this.userId = null;
 	}
 
 	public AccessReq() {
 		super();
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

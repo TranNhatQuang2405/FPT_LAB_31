@@ -1,6 +1,8 @@
 package fpt.lab.controller;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fpt.lab.constant.PathConstant;
 import fpt.lab.model.dto.ItemHomeDto;
@@ -33,13 +36,21 @@ public class HomeController extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private void doAccess(HttpServletRequest request) {
+	private void doAccess(HttpServletRequest request) throws UnknownHostException {
+		HttpSession session = request.getSession();
+		String sessionId = session.getId();
 		String userAgent = request.getHeader("User-Agent");
 		String ip = request.getHeader("X-FORWARDED-FOR");
+		String serverName = request.getServerName();
 		if (ip == null || "".equals(ip)) {
-			ip = request.getRemoteAddr();
+			if(serverName.equals("localhost")) {
+				InetAddress address = InetAddress.getLocalHost();
+				ip = address.getHostAddress();
+			}else {
+				ip = request.getRemoteAddr();
+			}
 		}
-		AccessReq accessReq = new AccessReq(ip, userAgent);
+		AccessReq accessReq = new AccessReq(ip, userAgent, sessionId);
 		CommonService commonService = new CommonService();
 		commonService.accessSite(accessReq);
 	}
