@@ -8,11 +8,7 @@ public class CommonService {
 	public int accessSite(AccessReq accessReq) {
 		AccessDao accessDao = new AccessDao();
 //		if(accessDao.checkAccess(accessReq))
-			if(accessReq.getUserId() != null) {
-				return accessDao.accessSite(accessReq);
-			}else {
-				return accessDao.accessSiteAnomynous(accessReq);
-			}
+		return accessDao.accessSite(accessReq);
 //		else 
 //			return NumberResultConstant.NO_ACTION;
 	}	

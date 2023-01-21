@@ -10,12 +10,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import fpt.lab.constant.MessageConstant;
 import fpt.lab.constant.ParamConstant;
 import fpt.lab.constant.PathConstant;
 import fpt.lab.constant.PatternConstant;
+import fpt.lab.dao.ContactDao;
 import fpt.lab.model.dto.PageContent;
+import fpt.lab.model.dto.UserDto;
 import fpt.lab.model.req.ContactReq;
 import fpt.lab.service.ContactService;
 
@@ -36,9 +38,20 @@ public class ContactController extends HttpServlet {
 		doInit(request);
 		ContactReq contactReq = doValidate(request, response);
 		if (contactReq != null) {
-
+			doContact(request, response, contactReq);
 		}
 		request.getRequestDispatcher(PathConstant.JSP_CONTACT_PATH).forward(request, response);
+	}
+
+	private void doContact(HttpServletRequest request, HttpServletResponse response, ContactReq contactReq) {
+		ContactDao contactDao = new ContactDao();
+		boolean result = contactDao.contact(contactReq);
+		if (result) {
+			request.setAttribute(ParamConstant.CONTACT_PARAM_SUCCESS_CONTACT, true);
+		} else {
+			System.out.println("HELo");
+			request.setAttribute(ParamConstant.CONTACT_PARAM_ERROR_CONTACT, true);
+		}
 	}
 
 	private void doInit(HttpServletRequest request) {
@@ -58,21 +71,21 @@ public class ContactController extends HttpServlet {
 		String message = request.getParameter(ParamConstant.CONTACT_PARAM_MESSAGE);
 		boolean check = true;
 		if (name == null || name.isBlank()) {
-			request.setAttribute(ParamConstant.CONTACT_PARAM_ERROR_NAME, MessageConstant.EMPTY_FIELD);
+			request.setAttribute(ParamConstant.CONTACT_PARAM_ERROR_NAME, true);
 			check = false;
 		}
-		if (email == null || email.isBlank() ) {
-			request.setAttribute(ParamConstant.CONTACT_PARAM_ERROR_EMAIL, MessageConstant.EMPTY_FIELD);
+		if (email == null || email.isBlank()) {
+			request.setAttribute(ParamConstant.CONTACT_PARAM_ERROR_EMAIL, true);
 			check = false;
-		}else {
+		} else {
 			Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
-			if(!matcher.matches()) {
-				request.setAttribute(ParamConstant.CONTACT_PARAM_ERROR_EMAIL, MessageConstant.EMAIL_INCORRECT);
+			if (!matcher.matches()) {
+				request.setAttribute(ParamConstant.CONTACT_PARAM_INVALID_EMAIL, true);
 				check = false;
 			}
 		}
 		if (message == null || message.isBlank()) {
-			request.setAttribute(ParamConstant.CONTACT_PARAM_ERROR_MESSAGE, MessageConstant.EMPTY_FIELD);
+			request.setAttribute(ParamConstant.CONTACT_PARAM_ERROR_MESSAGE, true);
 			check = false;
 		}
 		if (check == false) {
@@ -81,7 +94,9 @@ public class ContactController extends HttpServlet {
 			request.setAttribute(ParamConstant.CONTACT_PARAM_MESSAGE, message);
 			return null;
 		}
-		ContactReq contactReq = new ContactReq(name, email, message);
+		HttpSession session = request.getSession();
+		UserDto user = (UserDto) session.getAttribute(ParamConstant.PARAM_USER);
+		ContactReq contactReq = new ContactReq(name, email, message, user.getUserId());
 		return contactReq;
 	}
 

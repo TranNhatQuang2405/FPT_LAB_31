@@ -8,6 +8,21 @@ public class ContactReq implements Serializable{
 	private String name;
 	private String email;
 	private String message;
+	private String userId;
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public ContactReq(String name, String email, String message, String userId) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.message = message;
+		this.userId = userId;
+	}
 	public ContactReq(String name, String email, String message) {
 		this.name = name;
 		this.email = email;

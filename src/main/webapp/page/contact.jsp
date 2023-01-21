@@ -47,7 +47,14 @@
 
 								<div class="section contact-form">
 									<div class="content">
-										<div class="alert alert-success hide">${data.getValue("CONTACT_BODY.THANKS_MESSAGE")}</div>
+										<c:if test="${success_contact != null}">
+											<div class="alert alert-success">${data.getValue("CONTACT_BODY.MESSAGE.THANKS_MESSAGE")}</div>
+										</c:if>
+										<c:if test="${error_contact != null}">
+											<div class="alert alert-error">
+	                                            ${data.getValue("CONTACT_BODY.MESSAGE.ERROR_CONTACT")}
+	                                        </div>
+										</c:if>
 										<p>${data.getValue("CONTACT_BODY.SEND_EMAIL_TITLE")}</p>
 										<form method="post">
 											<fieldset>
@@ -55,22 +62,29 @@
 													<div class="span6">
 														<input class="${error_name != null ? 'error': ''}" name="name" value="${name}" type="text" placeholder='${data.getValue("CONTACT_BODY.NAME_PLACEHONDER")}' />
 														<span class="help-block" style="${error_name != null ? 'display: inline-block': ''}">
-															${error_name}
+															${data.getValue("CONTACT_BODY.MESSAGE.ERROR_NAME")}
 														</span>
 													</div>
 													<div class="span6">
-														<input class="${error_email != null ? 'error': ''}" name="email" value="${email}" type="text"
+														<input class="${(error_email != null || invalid_email != null) ? 'error': ''}" name="email" value="${email}" type="text"
 															placeholder='${data.getValue("CONTACT_BODY.EMAIL_PLACEHONDER")}' /> 
-													    <span class="help-block" style="${error_email != null ? 'display: block': ''}">
-															${error_email}
-														</span>
+													    <c:if test="${error_email != null}">
+														    <span class="help-block" style="${error_email != null ? 'display: block': ''}">
+																${data.getValue("CONTACT_BODY.MESSAGE.ERROR_EMAIL")}
+															</span>
+													    </c:if>
+													   <c:if test="${invalid_email != null}">
+														   	<span class="help-block" style="${invalid_email != null ? 'display: block': ''}">
+																${data.getValue("CONTACT_BODY.MESSAGE.INVALID_EMAIL")}
+															</span>
+													   </c:if>
 													</div>
 												</div>
 												<div class="row-fluid">
 													<div class="span12">
 														<textarea class="${error_message != null ? 'error': ''}" name="message" placeholder='${data.getValue("CONTACT_BODY.MESSAGE_PLACEHONDER")}'>${message}</textarea>
 													    <span class="help-block" style="${error_message != null ? 'display: inline-block': ''}">
-															${error_message}
+															${data.getValue("CONTACT_BODY.MESSAGE.ERROR_MESSAGE")}
 														</span>
 													</div>
 												</div>
