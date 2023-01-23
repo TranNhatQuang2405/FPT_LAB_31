@@ -40,11 +40,11 @@ public class HomeController extends HttpServlet {
 	private void doAccess(HttpServletRequest request) throws UnknownHostException {
 		HttpSession session = request.getSession();
 		String sessionId = session.getId();
-		String userAgent = request.getHeader("User-Agent");
-		String ip = request.getHeader("X-FORWARDED-FOR");
+		String userAgent = request.getHeader(ParamConstant.HEADER_USER_AGENT);
+		String ip = request.getHeader(ParamConstant.HEADER_IP);
 		String serverName = request.getServerName();
-		if (ip == null || "".equals(ip)) {
-			if(serverName.equals("localhost")) {
+		if (ip == null || ip.isBlank()) {
+			if(serverName.equals(ParamConstant.HEADER_LOCAL_DOMAIN)) {
 				InetAddress address = InetAddress.getLocalHost();
 				ip = address.getHostAddress();
 			}else {
